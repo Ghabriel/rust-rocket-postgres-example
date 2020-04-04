@@ -1,12 +1,17 @@
 #![feature(proc_macro_hygiene, decl_macro)]
 
-use postgres::{Client, NoTls, error::Error};
+use postgres::{Client, NoTls};
 
-use rocket::{get, http::ContentType, response::{content::{Content, Html}, Response}, routes};
+use rocket::{get, routes};
 
 use rocket_contrib::json::Json;
 
 use serde::{Deserialize, Serialize};
+
+const DATABASE_HOST: &str = "localhost";
+const DATABASE_USER: &str = "postgres";
+const DATABASE_PASSWORD: &str = "safepass";
+const DATABASE_NAME: &str = "pudim";
 
 #[derive(Deserialize, Serialize)]
 struct Network {
@@ -21,7 +26,16 @@ fn hello(name: String, age: u8) -> String {
 
 #[get("/networks")]
 fn networks() -> Option<Json<Vec<Network>>> {
-    let mut client = Client::connect("host=localhost dbname=pudim user=postgres password=safepass", NoTls)
+    let mut client = Client::connect(
+        &format!(
+            "host={} dbname={} user={} password={}",
+            DATABASE_HOST,
+            DATABASE_NAME,
+            DATABASE_USER,
+            DATABASE_PASSWORD,
+        ),
+        NoTls,
+    )
         .unwrap();
     let mut result = Vec::new();
 
