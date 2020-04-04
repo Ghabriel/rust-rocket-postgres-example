@@ -1,0 +1,9 @@
+version: '3.3'
+services:
+  db:
+    image: postgres
+    restart: unless-stopped
+    environment:
+     - POSTGRES_PASSWORD=safepass
+    ports:
+      - 5432:5432
