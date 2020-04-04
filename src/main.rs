@@ -8,7 +8,7 @@ use rocket_contrib::json::Json;
 
 use serde::{Deserialize, Serialize};
 
-const DATABASE_HOST: &str = "localhost";
+const DATABASE_HOST: &str = "0.0.0.0";
 const DATABASE_USER: &str = "postgres";
 const DATABASE_PASSWORD: &str = "safepass";
 const DATABASE_NAME: &str = "pudim";
